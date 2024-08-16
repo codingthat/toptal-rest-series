@@ -36,7 +36,7 @@ const loggerOptions: expressWinston.LoggerOptions = {
 
 if (!process.env.DEBUG) {
     loggerOptions.meta = false; // when not debugging, make terse
-    if (typeof global.it === 'function') {
+    if (process.env.TEST) {
         loggerOptions.level = 'http'; // for non-debug test runs, squelch entirely
     }
 }
