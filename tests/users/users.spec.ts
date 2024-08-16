@@ -1,4 +1,7 @@
 import o from 'ospec';
+import UsersMiddleware from '../../users/middleware/users.middleware';
+UsersMiddleware.extractUserId = o.spy(UsersMiddleware.extractUserId);
+import { Request, Response, NextFunction } from 'express';
 import app from '../../app';
 import supertest from 'supertest';
 import shortid from 'shortid';
@@ -24,6 +27,7 @@ o.spec('users and auth endpoints', function () {
         request = supertest.agent(app);
     });
     o.after(function (done) {
+        o((UsersMiddleware.extractUserId as o.Spy<[Request, Response, NextFunction], Promise<any>>).callCount).equals(8);
         // shut down the Express.js server, close our MongoDB connection, then tell ospec we're done:
         app.close(() => {
             mongoose.connection.close(done);
