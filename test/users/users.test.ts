@@ -54,11 +54,12 @@ describe('users and auth endpoints', function () {
             .set({ Authorization: `Bearer ${accessToken}` })
             .send();
         expect(res.status).to.equal(200);
-        expect(res.body).not.to.be.empty;
-        expect(res.body).to.be.an('object');
-        expect(res.body._id).to.be.a('string');
-        expect(res.body._id).to.equal(firstUserIdTest);
-        expect(res.body.email).to.equal(firstUserBody.email);
+        expect(res.body).to.deep.equal({
+            _id: firstUserIdTest,
+            email: firstUserBody.email,
+            permissionFlags: 1,
+            __v: 0,
+        });
     });
 
     describe('with a valid access token', function () {
@@ -106,11 +107,9 @@ describe('users and auth endpoints', function () {
                     permissionFlags: 256,
                 });
             expect(res.status).to.equal(400);
-            expect(res.body.errors).to.be.an('array');
-            expect(res.body.errors).to.have.length(1);
-            expect(res.body.errors[0]).to.equal(
+            expect(res.body.errors).to.deep.equal([
                 'User cannot change permission flags'
-            );
+            ]);
         });
 
         it('should allow a PUT to /users/:userId/permissionFlags/2 for testing', async function () {
@@ -155,13 +154,14 @@ describe('users and auth endpoints', function () {
                     .set({ Authorization: `Bearer ${accessToken}` })
                     .send();
                 expect(res.status).to.equal(200);
-                expect(res.body).not.to.be.empty;
-                expect(res.body).to.be.an('object');
-                expect(res.body._id).to.be.a('string');
-                expect(res.body.firstName).to.equal(newFirstName2);
-                expect(res.body.lastName).to.equal(newLastName2);
-                expect(res.body.email).to.equal(firstUserBody.email);
-                expect(res.body._id).to.equal(firstUserIdTest);
+                expect(res.body).to.deep.equal({
+                    _id: firstUserIdTest,
+                    email: firstUserBody.email,
+                    firstName: newFirstName2,
+                    lastName: newLastName2,
+                    permissionFlags: 2,
+                    __v: 0,
+                });
             });
 
             it('should allow a DELETE from /users/:userId', async function () {
