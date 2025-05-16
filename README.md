@@ -2,7 +2,7 @@
 
 A project made for the free _Building a Node.js/TypeScript REST API_ series at the Toptal Engineering Blog.
 
-This branch contains some setup for linting and prettifying code that is outside the scope of the series.
+This branch contains some setup for linting and prettifying code that is outside the scope of [the series](https://www.toptal.com/express-js/nodejs-typescript-rest-api-pt-1).
 
 In addition to the inclusion of `.eslintrc.json` and `.prettierrc` files, some development dependencies were added to `package.json`, namely `@typescript-eslint/eslint-plugin eslint-plugin-mocha eslint-plugin-prettier eslint-config-prettier`.
 
